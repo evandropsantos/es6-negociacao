@@ -1,27 +1,32 @@
-class NegociacaoController{
-    constructor(){
-        let $ = document.querySelector.bind(document);
+class NegociacaoController {
+	constructor() {
+		let $ = document.querySelector.bind(document);
 
-        this._inputData = $('#data');
-        this._inputQuantidade = $('#quantidade');
-        this._inputValor = $('#valor');
-    }
+		this._inputData = $('#data');
+		this._inputQuantidade = $('#quantidade');
+		this._inputValor = $('#valor');
+	}
+	
+	adiciona(event){
+		event.preventDefault();
+		
+		let negociacao = new Negociacao(
+			DateHelper.textoParaData(this._inputData.value),
+			this._inputQuantidade.value,
+			this._inputValor.value
+		);
 
-    adiciona(event){
-        event.preventDefault();
-        
-        let data = new Date(...
-            this._inputData.value
-                .split('-')
-                .map((item, indice) => item - indice % 2) // Subtrair o mes por 1 (JS o mes inicia em 0).
-        );
+		console.log(negociacao.data);
+		
+		let diaMesAno = DateHelper.dataParaTexto(negociacao.data);
 
-        let negociacao = new Negociacao(
-            data,
-            this._inputQuantidade.value,
-            this._inputValor.value
-        );
+        console.log(diaMesAno);
 
-       console.log(negociacao);
-    }
+		// Limpando o formulario depois de submetido
+		this._inputData.value = '',
+		this._inputQuantidade.value = 1,
+		this._inputValor.value = 0;
+
+		this._inputData.focus();
+	}
 }
